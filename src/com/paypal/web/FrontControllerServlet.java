@@ -59,6 +59,9 @@ public class FrontControllerServlet extends HttpServlet {
 		process(request, response);
 	}
 
+	/*
+	 * Method to process user request based on url.
+	 */
 	private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String uri =  request.getRequestURI();
 		if(uri.endsWith(GET_ADD_RESTAURANT_FORM)) {
@@ -86,7 +89,9 @@ public class FrontControllerServlet extends HttpServlet {
 			filterRestaurantsFromDB(request,response);
 		}
 	}
-	
+	/*
+	 * Use case #3 : Search based on Food, Ambiance, Service
+	 */
 	private void filterRestaurantsFromDB(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ZomatoDao dao = new ZomatoDaoJdbcImpl();
 		String forwardPath = "showFilteredRestaurant.jsp";
@@ -105,6 +110,7 @@ public class FrontControllerServlet extends HttpServlet {
 			request.setAttribute("errorMess", e.getMessage());
 		}
 		List<Result> finalResultList = new ArrayList<>();
+		/*Logic to filter grouped results based on search criteria*/
 		for (SearchResult dbResultObj : results) {
 			if("food".equalsIgnoreCase(dbResultObj.getParameter())) {
 				if(dbResultObj.getAverageRating() >= foodRating) {
@@ -136,6 +142,9 @@ public class FrontControllerServlet extends HttpServlet {
 		rd.forward(request, response);
 	}
 
+	/*
+	 * Use Case #2 : Get Feed Back for a restaurant
+	 */
 	private void getOverallRatingsFromDB(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ZomatoDao dao = new ZomatoDaoJdbcImpl();
 		String forwardPath = "successPage.jsp";
@@ -165,6 +174,7 @@ public class FrontControllerServlet extends HttpServlet {
 		rd.forward(request, response);
 	}
 
+	/*Method to get Give Rating Form*/
 	private void getRatingsForARestaurantForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String forwardPath = "GetRatings.jsp";
 		ZomatoDao dao = new ZomatoDaoJdbcImpl();
@@ -182,11 +192,15 @@ public class FrontControllerServlet extends HttpServlet {
 		rd.forward(request, response);
 	}
 
+	
 	private void getAddRestaurantFormAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String forwardPath = "addRestaurantForm.jsp";
 		RequestDispatcher rd = request.getRequestDispatcher(forwardPath);
 		rd.forward(request, response);
 	}
+	/*
+	 *  Add Restaurant to DB
+	 */
 	private void getAddARestaurantToDBAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ZomatoDao dao = new ZomatoDaoJdbcImpl();
 		String forwardPath = "successPage.jsp";
@@ -211,6 +225,9 @@ public class FrontControllerServlet extends HttpServlet {
 		rd.forward(request, response);
 	}
 	
+	/*
+	 * Use case 1 : Give feedback to restaurant
+	 */
 	private void getAddReviewsToRestaurantForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String forwardPath = "ReviewARestaurant.jsp";
 		ZomatoDao dao = new ZomatoDaoJdbcImpl();

@@ -24,7 +24,7 @@ public class ZomatoDaoJdbcImpl implements ZomatoDao {
 	private String username="root";
 	private String password="SqlRoot3!";
 
-	
+	/*Utility method to get connection object */
 	private Connection getConnection() throws ApplicationException {
 		Connection conn = null;
 		try {
@@ -40,7 +40,11 @@ public class ZomatoDaoJdbcImpl implements ZomatoDao {
 		return conn;
 	}
 	
-	
+	/*
+	 * (non-Javadoc)
+	 * @see com.paypal.dao.ZomatoDao#addARestaurant(com.paypal.model.Restaurant)
+	 * Add restaurants to DB
+	 */
 	@Override
 	public void addARestaurant(Restaurant restaurant) throws ApplicationException, DaoException  {
 		Connection connection = null;
@@ -65,6 +69,11 @@ public class ZomatoDaoJdbcImpl implements ZomatoDao {
 		}
 	}
 
+	/*
+	 * Method to get All Restaurants from DB
+	 * (non-Javadoc)
+	 * @see com.paypal.dao.ZomatoDao#getAllRestaurants()
+	 */
 	public List<Restaurant> getAllRestaurants() throws DaoException {
 		Connection conn = null;
 		Statement stmt = null;
@@ -89,6 +98,7 @@ public class ZomatoDaoJdbcImpl implements ZomatoDao {
 		}
 		return restaurants;
 	}
+	
 	
 	private void closeResultSet(ResultSet rs) throws ApplicationException {
 		if (rs != null) {
